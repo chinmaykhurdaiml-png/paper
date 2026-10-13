@@ -1,0 +1,6 @@
+{
+  "name": "PaperNest - Online Stationery Store",
+  "description": "Discover curated notebooks, fine pens, art supplies, and artisanal desk essentials at PaperNest.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
