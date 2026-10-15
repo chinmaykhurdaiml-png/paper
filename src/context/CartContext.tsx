@@ -171,16 +171,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 
   let discountAmount = 0;
+  let shippingFee =
+    cart.length === 0 ? 0 : subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING;
+
   if (discountCode === 'NEST10') {
     discountAmount = Math.round(subtotal * 0.1); // 10% off
   } else if (discountCode === 'WELCOME50') {
     discountAmount = Math.min(50, subtotal);
+  } else if (discountCode === 'LIZARD') {
+    shippingFee = 0;
+    discountAmount = cart.length === 0 ? 0 : Math.max(0, subtotal - 1);
   }
 
-  const shippingFee =
-    cart.length === 0 ? 0 : subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING;
-
-  const total = Math.max(0, subtotal - discountAmount + shippingFee);
+  const total =
+    cart.length === 0
+      ? 0
+      : discountCode === 'LIZARD'
+      ? 1
+      : Math.max(0, subtotal - discountAmount + shippingFee);
 
   const applyDiscount = (code: string) => {
     const clean = code.trim().toUpperCase();
@@ -192,8 +200,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setDiscountCode('WELCOME50');
       showToast('Promo code WELCOME50 applied! ₹50 discount added.', 'success');
       return { success: true, message: '₹50 welcome discount applied!' };
+    } else if (clean === 'LIZARD') {
+      setDiscountCode('LIZARD');
+      showToast('Promo code Lizard applied! Cart value set to ₹1.', 'success');
+      return { success: true, message: 'Promo code Lizard applied! Cart value is now ₹1.' };
     } else {
-      showToast('Invalid coupon code. Try NEST10', 'error');
+      showToast('Invalid coupon code. Try Lizard or NEST10', 'error');
       return { success: false, message: 'Invalid promo code. Please check and try again.' };
     }
   };
