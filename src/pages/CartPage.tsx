@@ -326,7 +326,7 @@ export const CartPage: React.FC = () => {
                         <p className="text-[11px] text-rose-600">{couponError}</p>
                       )}
                       <p className="text-[10px] text-stone-400">
-                        Tip: Try <strong>NEST10</strong> for 10% off or <strong>WELCOME50</strong>
+                        Tip: Try <strong>Lizard</strong> for ₹1 special cart or <strong>NEST10</strong> for 10% off
                       </p>
                     </form>
                   )}
